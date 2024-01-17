@@ -81,6 +81,19 @@ include('../../_layout/modal.php');
 
       }
 
+      if ($_FILES['video']['name']) {
+        $uploadVideo = upload_video($estabelecimento, $_FILES['video']);
+        
+        if ($uploadVideo['status'] == "1") {
+            $videoUrl = $uploadVideo['url'];
+        } else {
+            $checkerrors++;
+            for ($x = 0; $x < count($uploadVideo['errors']); $x++) {
+                $errormessage[] = $uploadVideo['errors'][$x];
+            }
+        }
+    }
+
       // -- Estabelecimento
 
       if( !$estabelecimento ) {
@@ -278,6 +291,18 @@ include('../../_layout/modal.php');
             </div>
 
           </div>
+
+          <div class="row">
+            <div class="col-md-12">
+                <label>Vídeo:</label>
+                <div class="file-preview">
+                    <div class="video-preview" id="video-preview"></div>
+                    <label for="video-upload" id="video-label">Enviar vídeo</label>
+                    <input type="file" name="video" id="video-upload" accept=".mp4, .mkv, .wmv, .avi, .webm, .ogg" />
+                </div>
+                <span class="explain">Selecione o vídeo clicando no campo ou arrastando o arquivo!</span>
+            </div>
+        </div>
 
           <div class="row">
 
