@@ -11,9 +11,11 @@ $firstdomain = $firstdomain[0];
 
 // Mapeando subdominio //
 
-  $insubdominio = $_GET['insubdominio'];
+  $insubdominio = isset($_GET['insubdominio']);
   if( !$insubdominio ) {
-    $insubdominio = array_shift((explode('.', $_SERVER['HTTP_HOST'])));
+    $hostParts = explode('.', $_SERVER['HTTP_HOST']);
+    $insubdominiourl = array_shift($hostParts);
+    
     if( $insubdominio == $firstdomain ) {
       $insubdominio = "";
     }
@@ -58,7 +60,7 @@ $firstdomain = $firstdomain[0];
 
   // Se existe o subdominio
 
-  if( $has_insubdominio ) {
+  if( isset($has_insubdominio) ) {
 
     $insubdominiourl = $insubdominio;
 

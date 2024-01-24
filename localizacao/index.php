@@ -10,7 +10,7 @@ $seo_keywords = "";
 // HEADER
 $system_header = "";
 
-if( $_COOKIE['cidade'] ) {
+if( isset($_COOKIE['cidade']) ) {
 	$cidade = mysqli_real_escape_string( $db_con, $_COOKIE['cidade'] );
 	$subdominio = data_info( "cidades",$cidade,"subdominio" );
 	if( $subdominio ) {

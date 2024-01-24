@@ -2,7 +2,7 @@
 // CORE
 require_once('../../_core/_includes/config.php');
 
-if( $_SESSION['user']['logged'] == "1" ) {
+if( isset($_SESSION['user']['logged']) == "1" ) {
 
   if( $_SESSION['user']['level'] == "1" ) {
     header("Location: ../../administracao/inicio");
@@ -17,7 +17,7 @@ if( $_SESSION['user']['logged'] == "1" ) {
 // SEO
 $seo_subtitle = "Cadastrar";
 $seo_description = "Cadastrar";
-$seo_keywords = $app['title'].", ".$seo_title;
+$seo_keywords = isset($app['title']).", ".$seo_title;
 $seo_image = get_just_url()."/_core/_cdn/img/favicon.png";
 // HEADER
 $system_header .= "";
@@ -29,7 +29,7 @@ include('../../_core/_layout/modal.php');
 //global $recaptcha_secretkey;
 //require_once('../../_core/_cdn/recaptcha/autoload.php');
 global $simple_url;
-$afiliado = $_SESSION['afiliado'];
+$afiliado = isset($_SESSION['afiliado']);
 ?>
 
 <?php
@@ -40,7 +40,7 @@ $afiliado = $_SESSION['afiliado'];
 
   // Checar se formulário foi executado
 
-  $formdata = $_POST['formdata'];
+  $formdata = isset($_POST['formdata']);
 
   if( $formdata ) {
 
@@ -498,13 +498,13 @@ $afiliado = $_SESSION['afiliado'];
 
               <?php if( $checkerrors ) { list_errors(); } ?>
 
-              <?php if( $_GET['msg'] == "erro" ) { ?>
+              <?php if( isset($_GET['msg']) == "erro" ) { ?>
 
                 <?php modal_alerta("Erro, tente novamente!","erro"); ?>
 
               <?php } ?>
 
-              <?php if( $_GET['msg'] == "sucesso" ) { ?>
+              <?php if( isset($_GET['msg']) == "sucesso" ) { ?>
 
                 <?php modal_alerta("Cadastro efetuado com sucesso!","sucesso"); ?>
 
@@ -541,7 +541,7 @@ $afiliado = $_SESSION['afiliado'];
                     <div class="form-field-default">
 
                         <label>Nome:</label>
-                        <input type="text" name="nome" placeholder="Nome do seu estabelecimento" value="<?php echo htmlclean( $_POST['nome'] ); ?>">
+                        <input type="text" name="nome" placeholder="Nome do seu estabelecimento" value="<?php echo htmlclean( isset($_POST['nome']) ); ?>">
 
                     </div>
 
@@ -556,7 +556,7 @@ $afiliado = $_SESSION['afiliado'];
                     <div class="form-field-default">
 
                         <label>Descrição:</label>
-                        <textarea rows="6" name="descricao" placeholder="Descrição do seu estabelecimento"><?php echo htmlclean( $_POST['descricao'] ); ?></textarea>
+                        <textarea rows="6" name="descricao" placeholder="Descrição do seu estabelecimento"><?php echo htmlclean( isset($_POST['descricao']) ); ?></textarea>
 
                     </div>
 
@@ -574,7 +574,7 @@ $afiliado = $_SESSION['afiliado'];
                         <span class="form-tip">A URL que seus clientes usarão para acessar a estabelecimento, não serão permitidos acentos, cedilha, pontos e caracteres especiais.</span>
                         <div class="row lowpadd">
                           <div class="col-md-3 col-xs-6 col-sm-6">
-                            <input class="subdomain" type="text" name="subdominio" placeholder="estabelecimento" value="<?php echo subdomain( htmlclean( $_POST['subdominio'] ) ); ?>">
+                            <input class="subdomain" type="text" name="subdominio" placeholder="estabelecimento" value="<?php echo subdomain( htmlclean( isset($_POST['subdominio']) ) ); ?>">
                           </div>
                           <div class="col-md-9 col-xs-6 col-sm-6">
                             <input type="text" id="input-nome" name="url" value=".<?php echo $simple_url; ?>" DISABLED>
@@ -603,7 +603,7 @@ $afiliado = $_SESSION['afiliado'];
                               while( $quickdata = mysqli_fetch_array( $quicksql ) ) {
                               ?>
 
-                                <option <?php if( $_POST['segmento'] == $quickdata['id'] ) { echo "SELECTED"; }; ?> value="<?php echo $quickdata['id']; ?>"><?php echo $quickdata['nome']; ?></option>
+                                <option <?php if( isset($_POST['segmento']) == $quickdata['id'] ) { echo "SELECTED"; }; ?> value="<?php echo $quickdata['id']; ?>"><?php echo $quickdata['nome']; ?></option>
 
                               <?php } ?>
 
@@ -630,7 +630,7 @@ $afiliado = $_SESSION['afiliado'];
                               while( $quickdata = mysqli_fetch_array( $quicksql ) ) {
                               ?>
 
-                                <option <?php if( $_POST['estado'] == $quickdata['id'] ) { echo "SELECTED"; }; ?> value="<?php echo $quickdata['id']; ?>"><?php echo $quickdata['nome']; ?></option>
+                                <option <?php if( isset($_POST['estado']) == $quickdata['id'] ) { echo "SELECTED"; }; ?> value="<?php echo $quickdata['id']; ?>"><?php echo $quickdata['nome']; ?></option>
 
                               <?php } ?>
 

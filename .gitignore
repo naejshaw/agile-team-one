@@ -1,1 +1,8 @@
 /_core/_includes/config.php
+/.vscode
+/php.ini
+/var
+/example.com+4-key.pem
+/example.com+4.pem
+/localhost-key.pem
+/localhost.pem
