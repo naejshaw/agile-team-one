@@ -1,5 +1,5 @@
 <?php 
-include('_core/_includes/config.php'); 
+include '_core/_includes/config.php'; 
 global $db_con;
 
 // Remote assinaturas

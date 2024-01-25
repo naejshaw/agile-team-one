@@ -21,10 +21,10 @@ $seo_keywords = isset($app['title']).", ".$seo_title;
 $seo_image = get_just_url()."/_core/_cdn/img/favicon.png";
 // HEADER
 $system_header .= "";
-include('../../_core/_layout/head.php');
-include('../../_core/_layout/top.php');
-include('../../_core/_layout/sidebars.php');
-include('../../_core/_layout/modal.php');
+include '../../_core/_layout/head.php';
+include '../../_core/_layout/top.php';
+include '../../_core/_layout/sidebars.php';
+include '../../_core/_layout/modal.php';
 //global $recaptcha_sitekey;
 //global $recaptcha_secretkey;
 //require_once('../../_core/_cdn/recaptcha/autoload.php');
@@ -496,7 +496,10 @@ $afiliado = isset($_SESSION['afiliado']);
 
             <div class="col-md-12">
 
-              <?php if( $checkerrors ) { list_errors(); } ?>
+              <?php 
+              $checkerrors = isset($checkerrors) ? $checkerrors : false; 
+              
+              if( $checkerrors ) { list_errors(); } ?>
 
               <?php if( isset($_GET['msg']) == "erro" ) { ?>
 

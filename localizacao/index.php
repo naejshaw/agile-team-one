@@ -2,7 +2,7 @@
 // CORE
 global $httprotocol;
 global $simple_url;
-include('../_core/_includes/config.php');
+// include '../_core/_includes/config.php';
 // SEO
 $seo_subtitle = "Catálogo Online!";
 $seo_description = "";

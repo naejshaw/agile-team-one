@@ -1,6 +1,6 @@
 <?php
 // CORE
-include('../_core/_includes/config.php');
+include '../_core/_includes/config.php';
 // SEO
 $seo_subtitle = "Esqueci minha senha";
 $seo_description = "";

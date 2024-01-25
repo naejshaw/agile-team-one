@@ -1,5 +1,5 @@
 <?php 
-include('_core/_includes/config.php'); 
+include '_core/_includes/config.php'; 
 
 // Globais
 global $rootpath;

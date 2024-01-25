@@ -7,10 +7,10 @@ $seo_keywords = isset($app['title']).", ".$seo_title;
 $seo_image = get_just_url()."/_core/_cdn/img/favicon.png";
 // HEADER
 $system_header .= "";
-include('../_core/_layout/head.php');
-include('../_core/_layout/top.php');
-include('../_core/_layout/sidebars.php');
-include('../_core/_layout/modal.php');
+include '../_core/_layout/head.php';
+include '../_core/_layout/top.php';
+include '../_core/_layout/sidebars.php';
+include '../_core/_layout/modal.php';
 global $plano_default;
 $afiliado = isset($_SESSION['afiliado']);
 ?>

@@ -1,6 +1,6 @@
 <?php
 // CORE
-include('../_core/_includes/config.php');
+include '../_core/_includes/config.php';
 // SEO
 $seo_subtitle = "Redefinição de senha";
 $seo_description = "";
