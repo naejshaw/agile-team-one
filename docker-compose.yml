@@ -1,9 +1,9 @@
 version: '3.8'
 services:
   php-apache-environment:
-    container_name: 'EstouOn'
+    container_name: 'Ominichanel'
     image: php:8.2-apache
   volumes:
-  - ./teste.estouon.app.br:/var/www/html/
+  - ./ominichanel.redewe2m.com.dev:/public_html/
   ports:
       - 8080:80
