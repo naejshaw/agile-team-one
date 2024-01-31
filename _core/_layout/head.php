@@ -63,7 +63,7 @@ $insubdominiourl = array_shift($hostParts);
 
   <?php
 
-  if( $_GET['afiliado'] ) {
+  if( isset($_GET['afiliado']) ) {
     $_SESSION['afiliado'] = mysqli_real_escape_string( $db_con, $_GET['afiliado'] );
   }
 

@@ -74,6 +74,7 @@ if ("serviceWorker" in navigator) {
 		// if( !$redirect ) {
 		// 	$redirect = $_SERVER['HTTP_REFERER'];
 		// }
+		// TODO: resolver erros exibidos na tela de login
 		$email = strtolower( mysqli_real_escape_string( $db_con, $_POST['email'] ) );
 		$pass = mysqli_real_escape_string( $db_con, $_POST['pass'] );
 		$keepalive = mysqli_real_escape_string( $db_con, $_POST['keepalive'] );
