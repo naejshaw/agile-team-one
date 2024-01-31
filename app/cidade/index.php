@@ -1,20 +1,20 @@
 <?php
 // CORE
-include $virtualpath.'/_layout/define.php';
+include($virtualpath.'/_layout/define.php');
 // APP
 global $app;
 global $seo_title;
 // SEO
-$seo_subtitle = isset($app['title'])."-".isset($app['uf']);
-$seo_description = isset($app['title']);
-$seo_keywords = isset($app['title']).", ".$seo_title;
+$seo_subtitle = $app['title']."-".$app['uf'];
+$seo_description = $app['title'];
+$seo_keywords = $app['title'].", ".$seo_title;
 $seo_image = get_just_url()."/_core/_cdn/img/favicon.png";
 // HEADER
 $system_header .= "";
-include $virtualpath.'/_layout/head.php';
-include $virtualpath.'/_layout/top.php';
-include $virtualpath.'/_layout/sidebars.php';
-include $virtualpath.'/_layout/modal.php';
+include($virtualpath.'/_layout/head.php');
+include($virtualpath.'/_layout/top.php');
+include($virtualpath.'/_layout/sidebars.php');
+include($virtualpath.'/_layout/modal.php');
 instantrender();
 ?>
 

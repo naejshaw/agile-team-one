@@ -2,7 +2,7 @@
 // CORE
 require_once('../../_core/_includes/config.php');
 
-if( isset($_SESSION['user']['logged']) == "1" ) {
+if( isset($_SESSION['user']['logged']) && $_SESSION['user']['logged'] == "1" ) {
 
   if( $_SESSION['user']['level'] == "1" ) {
     header("Location: ../../administracao/inicio");
@@ -21,10 +21,10 @@ $seo_keywords = isset($app['title']).", ".$seo_title;
 $seo_image = get_just_url()."/_core/_cdn/img/favicon.png";
 // HEADER
 $system_header .= "";
-include '../../_core/_layout/head.php';
-include '../../_core/_layout/top.php';
-include '../../_core/_layout/sidebars.php';
-include '../../_core/_layout/modal.php';
+include('../../_core/_layout/head.php');
+include('../../_core/_layout/top.php');
+include('../../_core/_layout/sidebars.php');
+include('../../_core/_layout/modal.php');
 //global $recaptcha_sitekey;
 //global $recaptcha_secretkey;
 //require_once('../../_core/_cdn/recaptcha/autoload.php');
@@ -496,10 +496,7 @@ $afiliado = isset($_SESSION['afiliado']);
 
             <div class="col-md-12">
 
-              <?php 
-              $checkerrors = isset($checkerrors) ? $checkerrors : false; 
-              
-              if( $checkerrors ) { list_errors(); } ?>
+              <?php if( isset($checkerrors) ) { list_errors(); } ?>
 
               <?php if( isset($_GET['msg']) == "erro" ) { ?>
 
@@ -655,14 +652,7 @@ $afiliado = isset($_SESSION['afiliado']);
                           <select id="input-cidade" name="cidade">
 
                             <option value="">Cidade</option>
-                            <?php 
-                              $quicksql = mysqli_query( $db_con, "SELECT * FROM cidades ORDER BY nome ASC " );
-                              while( $quickdata = mysqli_fetch_array( $quicksql ) ) {
-                              ?>
 
-                                <option <?php if( isset($_POST['cidade']) == $quickdata['id'] ) { echo "SELECTED"; }; ?> value="<?php echo $quickdata['id']; ?>"><?php echo $quickdata['nome']; ?></option>
-
-                              <?php } ?>
                           </select>
                           <div class="clear"></div>
                       </div>
@@ -773,8 +763,7 @@ $afiliado = isset($_SESSION['afiliado']);
                     <div class="form-field-default">
 
                         <label>Qual valor de pedido minímo?:</label>
-                        
-                        <input class="maskmoney" type="text" name="pedido_minimo" placeholder="Valor de pedido minímo" value="<?php  echo htmlclean( isset($_POST['pedido_minimo']) ); ?>">
+                        <input class="maskmoney" type="text" name="pedido_minimo" placeholder="Valor de pedido minímo" value="<?php echo htmlclean( isset($_POST['pedido_minimo']) ); ?>">
 
                     </div>
 
@@ -790,10 +779,10 @@ $afiliado = isset($_SESSION['afiliado']);
 
                         <label>O estabelecimento aceita dinheiro?</label>
                         <div class="form-field-radio">
-                          <input type="radio" name="pagamento_dinheiro" value="1" <?php if(isset($_POST['pagamento_dinheiro']) &&  $_POST['pagamento_dinheiro'] == 1 OR isset($_POST['pagamento_dinheiro']) && !$_POST['pagamento_dinheiro'] ){ echo 'CHECKED'; }; ?>> Sim
+                          <input type="radio" name="pagamento_dinheiro" value="1" <?php if( isset($_POST['pagamento_dinheiro']) == 1 OR !isset($_POST['pagamento_dinheiro']) ){ echo 'CHECKED'; }; ?>> Sim
                         </div>
                         <div class="form-field-radio">
-                          <input type="radio" name="pagamento_dinheiro" value="2" <?php if(isset($_POST['pagamento_dinheiro']) && $_POST['pagamento_dinheiro'] == 2 ){ echo 'CHECKED'; }; ?>> Não
+                          <input type="radio" name="pagamento_dinheiro" value="2" <?php if( isset($_POST['pagamento_dinheiro']) == 2 ){ echo 'CHECKED'; }; ?>> Não
                         </div>
                         <div class="clear"></div>
 
@@ -811,10 +800,10 @@ $afiliado = isset($_SESSION['afiliado']);
 
                         <label>O estabelecimento aceita cartão de débito?</label>
                         <div class="form-field-radio">
-                          <input type="radio" name="pagamento_cartao_debito" value="1" element-show=".elemento-bandeiras-debito" <?php if( isset($_POST['pagamento_cartao_debito']) && $_POST['pagamento_cartao_debito'] == 1 OR isset($_POST['pagamento_cartao_debito']) && !$_POST['pagamento_cartao_debito'] ){ echo 'CHECKED'; }; ?>> Sim
+                          <input type="radio" name="pagamento_cartao_debito" value="1" element-show=".elemento-bandeiras-debito" <?php if( isset($_POST['pagamento_cartao_debito']) == 1 OR !isset($_POST['pagamento_cartao_debito']) ){ echo 'CHECKED'; }; ?>> Sim
                         </div>
                         <div class="form-field-radio">
-                          <input type="radio" name="pagamento_cartao_debito" value="2" element-hide=".elemento-bandeiras-debito" <?php if( isset($_POST['pagamento_cartao_debito']) && $_POST['pagamento_cartao_debito'] == 2 ){ echo 'CHECKED'; }; ?>> Não
+                          <input type="radio" name="pagamento_cartao_debito" value="2" element-hide=".elemento-bandeiras-debito" <?php if( isset($_POST['pagamento_cartao_debito']) == 2 ){ echo 'CHECKED'; }; ?>> Não
                         </div>
                         <div class="clear"></div>
 
@@ -831,7 +820,7 @@ $afiliado = isset($_SESSION['afiliado']);
                     <div class="form-field-default">
 
                         <?php
-                        if( isset($_POST['pagamento_cartao_debito_bandeiras']) && $_POST['pagamento_cartao_debito_bandeiras'] ) {
+                        if( isset($_POST['pagamento_cartao_debito_bandeiras']) ) {
                           $field_pagamento_debito_bandeiras = $_POST['pagamento_cartao_debito_bandeiras'];
                         } else {
                           $field_pagamento_debito_bandeiras = "Visa, Mastercard e Elo";
@@ -854,10 +843,10 @@ $afiliado = isset($_SESSION['afiliado']);
 
                         <label>O estabelecimento aceita cartão de crédito?</label>
                         <div class="form-field-radio">
-                          <input type="radio" name="pagamento_cartao_credito" value="1" element-show=".elemento-bandeiras-credito" <?php if( isset($_POST['pagamento_cartao_credito']) && $_POST['pagamento_cartao_credito'] == 1 OR isset($_POST['pagamento_cartao_credito']) && !$_POST['pagamento_cartao_credito'] ){ echo 'CHECKED'; }; ?>> Sim
+                          <input type="radio" name="pagamento_cartao_credito" value="1" element-show=".elemento-bandeiras-credito" <?php if( isset($_POST['pagamento_cartao_credito']) == 1 OR !isset($_POST['pagamento_cartao_credito']) ){ echo 'CHECKED'; }; ?>> Sim
                         </div>
                         <div class="form-field-radio">
-                          <input type="radio" name="pagamento_cartao_credito" value="2" element-hide=".elemento-bandeiras-credito" <?php if( isset($_POST['pagamento_cartao_credito']) && $_POST['pagamento_cartao_credito'] == 2 ){ echo 'CHECKED'; }; ?>> Não
+                          <input type="radio" name="pagamento_cartao_credito" value="2" element-hide=".elemento-bandeiras-credito" <?php if( isset($_POST['pagamento_cartao_credito']) == 2 ){ echo 'CHECKED'; }; ?>> Não
                         </div>
                         <div class="clear"></div>
 
@@ -874,7 +863,7 @@ $afiliado = isset($_SESSION['afiliado']);
                     <div class="form-field-default">
 
                         <?php
-                        if( isset($_POST['pagamento_cartao_credito_bandeiras']) && $_POST['pagamento_cartao_credito_bandeiras'] ) {
+                        if( isset($_POST['pagamento_cartao_credito_bandeiras']) ) {
                           $field_pagamento_credito_bandeiras = $_POST['pagamento_cartao_credito_bandeiras'];
                         } else {
                           $field_pagamento_credito_bandeiras = "Visa, Mastercard e Elo";
@@ -897,10 +886,10 @@ $afiliado = isset($_SESSION['afiliado']);
 
                         <label>O estabelecimento aceita ticket alimentação?</label>
                         <div class="form-field-radio">
-                          <input type="radio" name="pagamento_cartao_alimentacao" value="1" element-show=".elemento-bandeiras-alimentacao" <?php if( isset($_POST['pagamento_cartao_alimentacao']) && $_POST['pagamento_cartao_alimentacao'] == 1 ){ echo 'CHECKED'; }; ?>> Sim
+                          <input type="radio" name="pagamento_cartao_alimentacao" value="1" element-show=".elemento-bandeiras-alimentacao" <?php if( isset($_POST['pagamento_cartao_alimentacao']) == 1 ){ echo 'CHECKED'; }; ?>> Sim
                         </div>
                         <div class="form-field-radio">
-                          <input type="radio" name="pagamento_cartao_alimentacao" value="2" element-hide=".elemento-bandeiras-alimentacao" <?php if( isset($_POST['pagamento_cartao_alimentacao']) && $_POST['pagamento_cartao_alimentacao'] == 2 OR isset($_POST['pagamento_cartao_alimentacao']) && !$_POST['pagamento_cartao_alimentacao'] ){ echo 'CHECKED'; }; ?>> Não
+                          <input type="radio" name="pagamento_cartao_alimentacao" value="2" element-hide=".elemento-bandeiras-alimentacao" <?php if( isset($_POST['pagamento_cartao_alimentacao']) == 2 OR !isset($_POST['pagamento_cartao_alimentacao']) ){ echo 'CHECKED'; }; ?>> Não
                         </div>
                         <div class="clear"></div>
 
@@ -917,7 +906,7 @@ $afiliado = isset($_SESSION['afiliado']);
                     <div class="form-field-default">
 
                         <?php
-                        if( $_POST['pagamento_cartao_alimentacao_bandeiras'] ) {
+                        if( isset($_POST['pagamento_cartao_alimentacao_bandeiras']) ) {
                           $field_pagamento_alimentacao_bandeiras = $_POST['pagamento_cartao_alimentacao_bandeiras'];
                         } else {
                           $field_pagamento_alimentacao_bandeiras = "Alelo e sodexo";
@@ -940,10 +929,10 @@ $afiliado = isset($_SESSION['afiliado']);
 
                         <label>O estabelecimento aceita alguma outra forma de pagamento?</label>
                         <div class="form-field-radio">
-                          <input type="radio" name="pagamento_outros" value="1" element-show=".elemento-outraforma" <?php if( isset($_POST['pagamento_outros']) && $_POST['pagamento_outros'] == 1 ){ echo 'CHECKED'; }; ?>> Sim
+                          <input type="radio" name="pagamento_outros" value="1" element-show=".elemento-outraforma" <?php if( isset($_POST['pagamento_outros']) == 1 ){ echo 'CHECKED'; }; ?>> Sim
                         </div>
                         <div class="form-field-radio">
-                          <input type="radio" name="pagamento_outros" value="2" element-hide=".elemento-outraforma" <?php if( isset($_POST['pagamento_outros']) && $_POST['pagamento_outros'] == 2 OR isset($_POST['pagamento_outros']) && !$_POST['pagamento_outros'] ){ echo 'CHECKED'; }; ?>> Não
+                          <input type="radio" name="pagamento_outros" value="2" element-hide=".elemento-outraforma" <?php if( isset($_POST['pagamento_outros']) == 2 OR !isset($_POST['pagamento_outros']) ){ echo 'CHECKED'; }; ?>> Não
                         </div>
                         <div class="clear"></div>
 
@@ -960,7 +949,7 @@ $afiliado = isset($_SESSION['afiliado']);
                     <div class="form-field-default">  
 
                         <?php
-                        if( isset($_POST['pagamento_outros_descricao']) && $_POST['pagamento_outros_descricao'] ) {
+                        if( isset($_POST['pagamento_outros_descricao']) ) {
                           $field_outros_descricao = $_POST['pagamento_outros_descricao'];
                         } else {
                           $field_outros_descricao = "Cheque, transferência e permuta";
@@ -1006,7 +995,7 @@ $afiliado = isset($_SESSION['afiliado']);
                       <div class="form-field-default">
 
                           <label>CEP</label>
-                          <input class="maskcep" type="text" name="endereco_cep" placeholder="CEP" value="<?php echo htmlclean( isset($_POST['endereco_cep']) && $_POST['endereco_cep'] ); ?>">
+                          <input class="maskcep" type="text" name="endereco_cep" placeholder="CEP" value="<?php echo htmlclean( isset($_POST['endereco_cep']) ); ?>">
 
                       </div>
 
@@ -1017,7 +1006,7 @@ $afiliado = isset($_SESSION['afiliado']);
                       <div class="form-field-default">
 
                           <label>Nº</label>
-                          <input type="text" name="endereco_numero" placeholder="Nº" value="<?php echo htmlclean(isset($_POST['endereco_numero']) && $_POST['endereco_numero'] ); ?>">
+                          <input type="text" name="endereco_numero" placeholder="Nº" value="<?php echo htmlclean( isset($_POST['endereco_numero']) ); ?>">
 
                       </div>
 
@@ -1032,7 +1021,7 @@ $afiliado = isset($_SESSION['afiliado']);
                       <div class="form-field-default">
 
                           <label>Bairro</label>
-                          <input type="text" name="endereco_bairro" placeholder="Bairro" value="<?php echo htmlclean(isset($_POST['endereco_bairro']) && $_POST['endereco_bairro'] ); ?>">
+                          <input type="text" name="endereco_bairro" placeholder="Bairro" value="<?php echo htmlclean( isset($_POST['endereco_bairro']) ); ?>">
 
                       </div>
 
@@ -1043,7 +1032,7 @@ $afiliado = isset($_SESSION['afiliado']);
                       <div class="form-field-default">
 
                           <label>Rua</label>
-                          <input type="text" name="endereco_rua" placeholder="Rua" value="<?php echo htmlclean(isset($_POST['endereco_rua']) && $_POST['endereco_rua'] ); ?>">
+                          <input type="text" name="endereco_rua" placeholder="Rua" value="<?php echo htmlclean( isset($_POST['endereco_rua']) ); ?>">
 
                       </div>
 
@@ -1058,7 +1047,7 @@ $afiliado = isset($_SESSION['afiliado']);
                       <div class="form-field-default">
 
                           <label>Complemento</label>
-                          <input type="text" name="endereco_complemento" placeholder="Complemento" value="<?php echo htmlclean(isset($_POST['endereco_complemento']) && $_POST['endereco_complemento'] ); ?>">
+                          <input type="text" name="endereco_complemento" placeholder="Complemento" value="<?php echo htmlclean( isset($_POST['endereco_complemento']) ); ?>">
 
                       </div>
 
@@ -1073,7 +1062,7 @@ $afiliado = isset($_SESSION['afiliado']);
                       <div class="form-field-default">
 
                           <label>Ponto de referência</label>
-                          <input type="text" name="endereco_referencia" placeholder="Complemento" value="<?php echo htmlclean(isset($_POST['endereco_referencia']) && $_POST['endereco_referencia'] ); ?>">
+                          <input type="text" name="endereco_referencia" placeholder="Complemento" value="<?php echo htmlclean( isset($_POST['endereco_referencia']) ); ?>">
 
                       </div>
 
@@ -1090,7 +1079,7 @@ $afiliado = isset($_SESSION['afiliado']);
                     <div class="form-field-default">
 
                         <label>Horário de funcionamento</label>
-                        <textarea rows="7" name="horario_funcionamento" placeholder="Horário de funcionamento"><?php echo htmlclean(isset($_POST['horario_funcionamento']) && $_POST['horario_funcionamento'] ); ?></textarea>
+                        <textarea rows="7" name="horario_funcionamento" placeholder="Horário de funcionamento"><?php echo htmlclean( isset($_POST['horario_funcionamento']) ); ?></textarea>
 
                     </div>
 
@@ -1106,10 +1095,10 @@ $afiliado = isset($_SESSION['afiliado']);
 
                         <label>O estabelecimento permite retirada no local?</label>
                         <div class="form-field-radio">
-                          <input type="radio" name="entrega_retirada" value="1" <?php if(isset($_POST['entrega_retirada']) && $_POST['entrega_retirada'] == 1 OR isset($_POST['entrega_retirada']) && !$_POST['entrega_retirada'] ){ echo 'CHECKED'; }; ?>> Sim
+                          <input type="radio" name="entrega_retirada" value="1" <?php if( isset($_POST['entrega_retirada']) == 1 OR !isset($_POST['entrega_retirada']) ){ echo 'CHECKED'; }; ?>> Sim
                         </div>
                         <div class="form-field-radio">
-                          <input type="radio" name="entrega_retirada" value="2" <?php if(isset($_POST['entrega_retirada']) && $_POST['entrega_retirada'] == 2 ){ echo 'CHECKED'; }; ?>> Não
+                          <input type="radio" name="entrega_retirada" value="2" <?php if( isset($_POST['entrega_retirada']) == 2 ){ echo 'CHECKED'; }; ?>> Não
                         </div>
                         <div class="clear"></div>
 
@@ -1129,10 +1118,10 @@ $afiliado = isset($_SESSION['afiliado']);
 
                         <label>O estabelecimento faz entregas?</label>
                         <div class="form-field-radio">
-                          <input type="radio" name="entrega_entrega" value="1" element-show=".elemento-frete" <?php if( $_POST['entrega_entrega'] == 1 OR !$_POST['entrega_entrega'] ){ echo 'CHECKED'; }; ?>> Sim
+                          <input type="radio" name="entrega_entrega" value="1" element-show=".elemento-frete" <?php if( isset($_POST['entrega_entrega']) == 1 OR !isset($_POST['entrega_entrega']) ){ echo 'CHECKED'; }; ?>> Sim
                         </div>
                         <div class="form-field-radio">
-                          <input type="radio" name="entrega_entrega" value="2" element-hide=".elemento-frete" <?php if( $_POST['entrega_entrega'] == 2 ){ echo 'CHECKED'; }; ?>> Não
+                          <input type="radio" name="entrega_entrega" value="2" element-hide=".elemento-frete" <?php if( isset($_POST['entrega_entrega']) == 2 ){ echo 'CHECKED'; }; ?>> Não
                         </div>
                         <div class="clear"></div>
 
@@ -1152,10 +1141,10 @@ $afiliado = isset($_SESSION['afiliado']);
 
                           <label>Qual tipo de frete?</label>
                           <div class="form-field-radio">
-                            <input type="radio" name="entrega_entrega_tipo" value="1" element-show=".elemento-frete-valor" <?php if( $_POST['entrega_entrega_tipo'] == 1 OR !$_POST['entrega_entrega_tipo'] ){ echo 'CHECKED'; }; ?>> Valor fixo
+                            <input type="radio" name="entrega_entrega_tipo" value="1" element-show=".elemento-frete-valor" <?php if( isset($_POST['entrega_entrega_tipo']) == 1 OR !isset($_POST['entrega_entrega_tipo']) ){ echo 'CHECKED'; }; ?>> Valor fixo
                           </div>
                           <div class="form-field-radio">
-                            <input type="radio" name="entrega_entrega_tipo" value="2" element-hide=".elemento-frete-valor" <?php if( $_POST['entrega_entrega_tipo'] == 2 ){ echo 'CHECKED'; }; ?>> Sob consulta
+                            <input type="radio" name="entrega_entrega_tipo" value="2" element-hide=".elemento-frete-valor" <?php if( isset($_POST['entrega_entrega_tipo']) == 2 ){ echo 'CHECKED'; }; ?>> Sob consulta
                           </div>
                           <div class="clear"></div>
 
@@ -1174,7 +1163,7 @@ $afiliado = isset($_SESSION['afiliado']);
                         <div class="form-field-default">
 
                             <?php
-                            if( $_POST['entrega_entrega_valor'] ) {
+                            if( isset($_POST['entrega_entrega_valor']) ) {
                               $field_entrega_valor = $_POST['entrega_entrega_valor'];
                             } else {
                               $field_entrega_valor = "0.00";
@@ -1226,7 +1215,7 @@ $afiliado = isset($_SESSION['afiliado']);
 
                         <label>Whatsapp</label>
                         <span class="form-tip">Será o número no qual você receberá os pedidos</span>
-                        <input class="maskcel" type="text" name="contato_whatsapp" placeholder="Whatsapp" value="<?php echo htmlclean(isset($_POST['contato_whatsapp']) && $_POST['contato_whatsapp'] ); ?>">
+                        <input class="maskcel" type="text" name="contato_whatsapp" placeholder="Whatsapp" value="<?php echo htmlclean( isset($_POST['contato_whatsapp']) ); ?>">
 
                     </div>
 
@@ -1241,7 +1230,7 @@ $afiliado = isset($_SESSION['afiliado']);
                     <div class="form-field-default">
 
                         <label>E-mail de contato</label>
-                        <input type="text" name="contato_email" placeholder="E-mail" value="<?php echo htmlclean( isset($_POST['contato_email']) && $_POST['contato_email'] ); ?>">
+                        <input type="text" name="contato_email" placeholder="E-mail" value="<?php echo htmlclean( isset($_POST['contato_email']) ); ?>">
 
                     </div>
 
@@ -1256,7 +1245,7 @@ $afiliado = isset($_SESSION['afiliado']);
                     <div class="form-field-default">
 
                         <label>Instagram</label>
-                        <input type="text" name="contato_instagram" placeholder="Instagram" value="<?php echo htmlclean( isset($_POST['contato_instagram']) && $_POST['contato_instagram'] ); ?>">
+                        <input type="text" name="contato_instagram" placeholder="Instagram" value="<?php echo htmlclean( isset($_POST['contato_instagram']) ); ?>">
 
                     </div>
 
@@ -1271,7 +1260,7 @@ $afiliado = isset($_SESSION['afiliado']);
                     <div class="form-field-default">
 
                         <label>Facebook</label>
-                        <input type="text" name="contato_facebook" placeholder="Facebook" value="<?php echo htmlclean( isset($_POST['contato_facebook']) && $_POST['contato_facebook'] ); ?>">
+                        <input type="text" name="contato_facebook" placeholder="Facebook" value="<?php echo htmlclean( isset($_POST['contato_facebook']) ); ?>">
 
                     </div>
 
@@ -1286,7 +1275,7 @@ $afiliado = isset($_SESSION['afiliado']);
                     <div class="form-field-default">
 
                         <label>Youtube</label>
-                        <input type="text" name="contato_youtube" placeholder="Youtube" value="<?php echo htmlclean( isset($_POST['contato_youtube']) && $_POST['contato_youtube'] ); ?>">
+                        <input type="text" name="contato_youtube" placeholder="Youtube" value="<?php echo htmlclean( isset($_POST['contato_youtube']) ); ?>">
 
                     </div>
 
@@ -1324,7 +1313,7 @@ $afiliado = isset($_SESSION['afiliado']);
                     <div class="form-field-default">
 
                         <label>Nome completo:</label>
-                        <input type="text" id="input-nome" name="responsavel_nome" placeholder="Nome completo" value="<?php echo htmlclean( isset($_POST['responsavel_nome']) && $_POST['responsavel_nome'] ); ?>">
+                        <input type="text" id="input-nome" name="responsavel_nome" placeholder="Nome completo" value="<?php echo htmlclean( isset($_POST['responsavel_nome']) ); ?>">
 
                     </div>
 
@@ -1339,7 +1328,7 @@ $afiliado = isset($_SESSION['afiliado']);
                       <div class="form-field-default">
 
                         <label>Data de nascimento:</label>
-                        <input type="text" class="maskdate" id="input-nascimento" name="responsavel_nascimento" placeholder="Data de nascimento" value="<?php echo htmlclean(isset($_POST['responsavel_nascimento']) && $_POST['responsavel_nascimento'] ); ?>">
+                        <input type="text" class="maskdate" id="input-nascimento" name="responsavel_nascimento" placeholder="Data de nascimento" value="<?php echo htmlclean( isset($_POST['responsavel_nascimento']) ); ?>">
 
                     </div>
 
@@ -1359,7 +1348,7 @@ $afiliado = isset($_SESSION['afiliado']);
                           <select id="input-documento_tipo" name="responsavel_documento_tipo">
                             <option></option>
                             <?php for( $x = 0; $x < count( $numeric_data['documento_tipo'] ); $x++ ) { ?>
-                            <option value="<?php echo $numeric_data['documento_tipo'][$x]['value']; ?>" <?php if(isset($_POST['responsavel_documento_tipo']) && $_POST['responsavel_documento_tipo'] == $numeric_data['documento_tipo'][$x]['value'] ) { echo 'SELECTED'; }; ?>><?php echo $numeric_data['documento_tipo'][$x]['name']; ?></option>
+                            <option value="<?php echo $numeric_data['documento_tipo'][$x]['value']; ?>" <?php if( isset($_POST['responsavel_documento_tipo']) == $numeric_data['documento_tipo'][$x]['value'] ) { echo 'SELECTED'; }; ?>><?php echo $numeric_data['documento_tipo'][$x]['name']; ?></option>
                             <?php } ?>
                           </select>
                           <div class="clear"></div>
@@ -1374,7 +1363,7 @@ $afiliado = isset($_SESSION['afiliado']);
                     <div class="form-field-default">
 
                         <label>Nº do documento:</label>
-                        <input type="text" id="input-documento" name="responsavel_documento" placeholder="Nº do documento" value="<?php echo htmlclean(isset($_POST['responsavel_documento']) && $_POST['responsavel_documento'] ); ?>">
+                        <input type="text" id="input-documento" name="responsavel_documento" placeholder="Nº do documento" value="<?php echo htmlclean( isset($_POST['responsavel_documento']) ); ?>">
 
                     </div>
 
@@ -1403,7 +1392,7 @@ $afiliado = isset($_SESSION['afiliado']);
                     <div class="form-field-default">
 
                         <label>E-mail</label>
-                        <input type="text" name="email" placeholder="E-mail" value="<?php echo htmlclean(isset($_POST['email']) && $_POST['email'] ); ?>">
+                        <input type="text" name="email" placeholder="E-mail" value="<?php echo htmlclean( isset($_POST['email']) ); ?>">
 
                     </div>
 
@@ -1450,7 +1439,7 @@ $afiliado = isset($_SESSION['afiliado']);
                         <div class="form-field-terms">
                           <input type="hidden" name="afiliado" value="<?php echo htmlclean( $afiliado ); ?>"/>
                           <input type="hidden" name="formdata" value="1"/>
-                          <input type="radio" name="terms" value="1" <?php if(isset($_POST['terms']) && $_POST['terms'] ){ echo 'CHECKED'; }; ?>> Eu aceito os termos de uso
+                          <input type="radio" name="terms" value="1" <?php if( isset($_POST['terms']) ){ echo 'CHECKED'; }; ?>> Eu aceito os termos de uso
                         </div>
 
                         <div class="ocaptcha">
@@ -1500,7 +1489,7 @@ include('../../_core/_layout/footer.php');
   $( "#input-estado" ).change(function() {
     exibe_cidades();
   });
-  <?php if(isset($_POST['estado']) && $_POST['estado'] ) { ?>
+  <?php if( isset($_POST['estado']) ) { ?>
     exibe_cidades();
   <?php } ?>
 
@@ -1759,7 +1748,7 @@ $(document).ready(function() {
   $( "#input-estado" ).change(function() {
     var estado = $(this).children("option:selected").val();
     $("#input-cidade").html("<option>-- Carregando cidades --</option>");
-    $("#input-cidade").load("<?php just_url(); ?>/_core/_ajax/cidades.php?estado="+estado+"&cidade=<?php echo htmlclean( $_POST['cidade'] ); ?>");
+    $("#input-cidade").load("<?php just_url(); ?>/_core/_ajax/cidades.php?estado="+estado+"&cidade=<?php echo htmlclean( isset($_POST['cidade']) ); ?>");
   });
 
   $( "#input-estado" ).trigger("change");

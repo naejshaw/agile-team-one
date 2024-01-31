@@ -1,4 +1,4 @@
-<?php include '../_core/_includes/config.php'; ?>
+<?php include('../_core/_includes/config.php'); ?>
 
 <?php
 

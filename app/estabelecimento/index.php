@@ -1,6 +1,6 @@
 <?php
 // CORE
-include $virtualpath.'/_layout/define.php';
+include($virtualpath.'/_layout/define.php');
 
 // APP
 global $app;

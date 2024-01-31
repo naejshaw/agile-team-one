@@ -38,12 +38,12 @@ foreach($_GET as $query_string_variable => $value) {
 // Config
 
 $limite = 20;
-$pagina = isset($_GET["pagina"]) == "" ? 1 : $_GET["pagina"];
+$pagina = isset($_GET["pagina"]) == "" ? 1 : isset($_GET["pagina"]);
 $inicio = ($pagina * $limite) - $limite;
 
 // Query
 
-$query .= "SELECT * FROM planos ";
+$query = "SELECT * FROM planos ";
 
 $query .= "WHERE 1=1 ";
 

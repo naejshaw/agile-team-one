@@ -1,5 +1,5 @@
 <?php 
-include '_core/_includes/config.php'; 
+include('_core/_includes/config.php'); 
 
 // Globais
 global $rootpath;
@@ -11,18 +11,21 @@ $firstdomain = $firstdomain[0];
 
 // Mapeando subdominio //
 
-  $insubdominio = isset($_GET['insubdominio']);
-  if( !$insubdominio ) {
+$insubdominio = isset($_GET['insubdominio']);
+
+if (!$insubdominio) {
     $hostParts = explode('.', $_SERVER['HTTP_HOST']);
-    $insubdominiourl = array_shift($hostParts);
-    
-    if( $insubdominio == $firstdomain ) {
-      $insubdominio = "";
+    $insubdominio = array_shift($hostParts);
+
+    if ($insubdominio == $firstdomain) {
+        $insubdominio = "";
     }
-    // if( $insubdominio == "www" ) {
+
+    // if ($insubdominio == "www") {
     //   header("location: ".$gowww);
     // }
-  }
+}
+
 
   // Estabelecimento
   if( mysqli_num_rows( mysqli_query( $db_con, "SELECT id,subdominio FROM estabelecimentos WHERE subdominio = '$insubdominio' AND excluded != '1' LIMIT 1" ) ) ) {
@@ -196,7 +199,7 @@ $firstdomain = $firstdomain[0];
       include("404.php");
     } else {
       include("localizacao/index.php");// DESMASCAR PARA USAR MARKETPLACE COMO PAGINA PADRAO
-      // header("Location: https://conheca.ominichanel.redewe2m.com.br/");
+      //header("Location: https://conheca.ominichanel.redewe2m.com.br/");
     }
 
   }

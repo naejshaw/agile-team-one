@@ -1,6 +1,6 @@
 <?php
 // CORE
-include '../_core/_includes/config.php';
+include('../_core/_includes/config.php');
 // SEO
 $seo_subtitle = "Redefinição de senha";
 $seo_description = "";
@@ -8,9 +8,9 @@ $seo_keywords = "";
 // HEADER
 $system_header = "";
 
-if( isset($_SESSION['user']['logged']) == "1" ) {
+if( isset($_SESSION['user']['logged']) && $_SESSION['user']['logged'] == "1" ) {
 
-	if( isset($_SESSION['user']['level']) == "1" ) {
+	if( $_SESSION['user']['level'] == "1" ) {
 		header("Location: ../administracao/inicio");
 	}
 

@@ -1,6 +1,6 @@
 <?php
 // CORE
-include '../_core/_includes/config.php';
+include('../_core/_includes/config.php');
 // SEO
 $seo_subtitle = "Login";
 $seo_description = "";
@@ -8,7 +8,7 @@ $seo_keywords = "";
 // HEADER
 $system_header = "";
 // CHECK LOGGED
-if( isset($_SESSION['user']['logged']) == "1" ) {
+if( isset($_SESSION['user']['logged']) && $_SESSION['user']['logged'] == "1" ) {
 
 	if( $_SESSION['user']['level'] == "1" ) {
 		header("Location: ../administracao/inicio");
@@ -70,13 +70,13 @@ if ("serviceWorker" in navigator) {
 
 		<?php
 
-		$redirect = mysqli_real_escape_string( $db_con, isset($_GET['redirect']) );
+		$redirect = mysqli_real_escape_string( $db_con, $_GET['redirect'] );
 		// if( !$redirect ) {
 		// 	$redirect = $_SERVER['HTTP_REFERER'];
 		// }
-		$email = strtolower( mysqli_real_escape_string( $db_con, isset($_POST['email']) ) );
-		$pass = mysqli_real_escape_string( $db_con, isset($_POST['pass']) );
-		$keepalive = mysqli_real_escape_string( $db_con, isset($_POST['keepalive']) );
+		$email = strtolower( mysqli_real_escape_string( $db_con, $_POST['email'] ) );
+		$pass = mysqli_real_escape_string( $db_con, $_POST['pass'] );
+		$keepalive = mysqli_real_escape_string( $db_con, $_POST['keepalive'] );
 		if( !$keepalive ) {
 			$keepalive = 0;
 		}

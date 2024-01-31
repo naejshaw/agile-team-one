@@ -1,5 +1,5 @@
 <?php
-include '_core/_includes/config.php'; 
+include('_core/_includes/config.php'); 
 global $db_con;
 global $mp_acess_token;
 $url = 'https://api.mercadopago.com/users/test_user?access_token='.$mp_acess_token;

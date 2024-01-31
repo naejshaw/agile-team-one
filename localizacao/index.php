@@ -2,7 +2,7 @@
 // CORE
 global $httprotocol;
 global $simple_url;
-// include dirname(__FILE__) . '../_core/_includes/config.php';
+include('../_core/_includes/config.php');
 // SEO
 $seo_subtitle = "Catálogo Online!";
 $seo_description = "";
@@ -132,7 +132,7 @@ if( isset($_COOKIE['cidade']) ) {
 																while ( $data_estado = mysqli_fetch_array( $query_estados ) ) {
 								                              ?>
 
-								                                <option <?php if( $_POST['estado'] == $data_estado['estado_id'] ) { echo "SELECTED"; }; ?> value="<?php echo $data_estado['estado_id']; ?>"><?php echo $data_estado['estado_nome']; ?></option>
+								                                <option <?php if( isset($_POST["estado"]) == $data_estado['estado_id'] ) { echo "SELECTED"; }; ?> value="<?php echo $data_estado['estado_id']; ?>"><?php echo $data_estado['estado_nome']; ?></option>
 
 								                              <?php } ?>
 
