@@ -21,6 +21,13 @@ $meudominio = $httprotocol.data_info("estabelecimentos",$_SESSION['estabelecimen
 
 ?>
 
+<?php
+// Mercado Pago
+
+
+// Exibição do botão de pagamento
+?>
+
 <div class="middle minfit bg-gray">
 
 	<div class="container">
@@ -147,22 +154,23 @@ $meudominio = $httprotocol.data_info("estabelecimentos",$_SESSION['estabelecimen
 	            <div class="col-md-9">
 
 	              <div class="form-field-default">
-
-	                  <label>URL de importação:</label>
-	                  <input id="copyme" type="text" value="<?php echo $meudominio; ?>/shopping.xml" DISABLED/>
+	                  <label>Valor total:</label>
+				  	  <input id="copyme" type="text" value="" DISABLED>
 
 	              </div>
 
 	            </div>
+				<a href="sdk/card.php">
+					<div class="col-md-3">
+						<label></label>
+						  <button class="fullwidth" data-clipboard-text="<?php echo $meudominio; ?>/shopping.xml">
+						  	<span>
+						  		<i class="lni lni-shopping-basket"></i> <a href="<?php echo $preference->sandbox_init_point; ?>">Pagar com Mercado Pago</a>
 
-	            <div class="col-md-3">
-	            	<label></label>
-	              	<button class="fullwidth" data-clipboard-text="<?php echo $meudominio; ?>/shopping.xml">
-	              		<span>
-	              			<i class="lni lni-clipboard"></i> Copiar
-	              		</span>
-	              	</button>
-	              </div>
+						  	</span>
+						  </button>
+					  </div>
+				</a>
 
 	          </div>
 
@@ -173,7 +181,6 @@ $meudominio = $httprotocol.data_info("estabelecimentos",$_SESSION['estabelecimen
 	</div>
 
 </div>
-
 <?php 
 // FOOTER
 $system_footer .= "";
