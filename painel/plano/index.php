@@ -17,7 +17,7 @@ include('../_layout/modal.php');
 
 $acao = isset($_GET['acao']);
 $eid = $_SESSION['estabelecimento']['id'];
-$id = mysqli_real_escape_string( $db_con, isset($_GET['id']) );
+$id = mysqli_real_escape_string( $db_con, $_GET['id'] );
 
 if( $acao == "remover" ) {
 
