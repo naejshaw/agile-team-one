@@ -70,14 +70,17 @@ if ("serviceWorker" in navigator) {
 
 		<?php
 
-		$redirect = mysqli_real_escape_string( $db_con, $_GET['redirect'] );
+		// $redirect = mysqli_real_escape_string( $db_con, $_GET['redirect'] );
 		// if( !$redirect ) {
 		// 	$redirect = $_SERVER['HTTP_REFERER'];
 		// }
 		// TODO: resolver erros exibidos na tela de login
-		$email = strtolower( mysqli_real_escape_string( $db_con, $_POST['email'] ) );
-		$pass = mysqli_real_escape_string( $db_con, $_POST['pass'] );
-		$keepalive = mysqli_real_escape_string( $db_con, $_POST['keepalive'] );
+		// Resolução: Utilização de um ternário para verificação das array keys. Caso positivo, adiciona a atribuição solicitada. Caso negativo, atribui "" ou 0 
+		$redirect = isset($_GET['redirect']) ? mysqli_real_escape_string($db_con, $_GET['redirect']) : "";
+		$email = isset($_POST['email']) ? strtolower(mysqli_real_escape_string($db_con, $_POST['email'])) : "";
+		$pass = isset($_POST['pass']) ? mysqli_real_escape_string($db_con, $_POST['pass']) : "";
+		$keepalive = isset($_POST['keepalive']) ? mysqli_real_escape_string($db_con, $_POST['keepalive']) : 0;
+
 		if( !$keepalive ) {
 			$keepalive = 0;
 		}
