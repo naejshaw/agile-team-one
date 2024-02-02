@@ -154,8 +154,16 @@ $meudominio = $httprotocol.data_info("estabelecimentos",$_SESSION['estabelecimen
 	            <div class="col-md-9">
 
 	              <div class="form-field-default">
-	                  <label>Valor total:</label>
+	                  <label>Public key:</label>
 				  	  <input id="copyme" type="text" value="" DISABLED>
+					  <!-- <input id="valor" type="number" placeholder="R$0.00" name="valor" value="25" > -->
+					  <label>Secret key:</label>
+					  <input id="copyme" type="text" value="" DISABLED>
+
+	              </div>
+
+				  <div class="form-field-default">
+					  <!-- <input id="valor" type="number" placeholder="R$0.00" name="valor" value="25" DISABLED> -->
 
 	              </div>
 
@@ -165,7 +173,8 @@ $meudominio = $httprotocol.data_info("estabelecimentos",$_SESSION['estabelecimen
 						<label></label>
 						  <button class="fullwidth" data-clipboard-text="<?php echo $meudominio; ?>/shopping.xml">
 						  	<span>
-						  		<i class="lni lni-shopping-basket"></i> <a href="<?php echo $preference->sandbox_init_point; ?>">Pagar com Mercado Pago</a>
+						  		<i class="lni lni-shopping-basket"></i> Mercado Pago
+								<!-- <a href="<?php echo $preference->sandbox_init_point; ?>">Pagar com Mercado Pago</a>  -->
 
 						  	</span>
 						  </button>
@@ -181,6 +190,8 @@ $meudominio = $httprotocol.data_info("estabelecimentos",$_SESSION['estabelecimen
 	</div>
 
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="js/app.js"></script>
 <?php 
 // FOOTER
 $system_footer .= "";
